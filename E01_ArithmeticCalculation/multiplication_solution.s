@@ -17,7 +17,13 @@ _start:
     mov r1, #0x2                @ r1 := 2
 
     add r1, r1, r0              @ r1 := r1 + r0
-    add r2, r1, r0, lsl #2      @ x = r1 + r0*4 = (2+7) + 7*4 = 2 + 7*5
+    add r2, r1, r0, lsl #0x2    @ x = r1 + r0*4 = (2+7) + 7*4 = 2 + 7*5
+
+    @ alternative solutions:
+    @ 1)
+    @ add r1, r1, r0
+    @ lsl r0, #0x2
+    @ add r2, r0, r1
 
 
 
