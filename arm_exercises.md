@@ -23,5 +23,5 @@ Eine Übersicht aller Systemcalls, incl. benötigter Argumente findet sich [hier
 Nutzen Sie für die Folgenden Aufgaben die Vorlage __calculate.s__ benennen Sie diese ggf. um.
 
 #### a)
-Berechnen Sie __(5 + 12) x 5__ und schreiben sie das Ergebnis nach __r0__.
+Berechnen Sie __32 + 12 x 5__ ohne einen Multiplikationsbefehl zu verwenden und schreiben sie das Ergebnis nach __r0__.
 
