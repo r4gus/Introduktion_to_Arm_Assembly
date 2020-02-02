@@ -22,7 +22,7 @@ ist nützlich, da so Strings ausgegeben werden können ohne deren Länge
 im Vorfeld wissen zu müssen.
 
 Erweitern Sie das Programm aus Aufgabe 1.1) und schreiben Sie eine Funktion namens __strlen__, 
-die einen __NULL terminierten__ String als Argument übergeben bekommt und dessen länge, 
+die einen __NULL terminierten__ String als Argument übergeben bekommt und dessen Länge, 
 ausschließlich __'\0'__, zurückliefert.
 
 > unsigned strlen(char* str)
@@ -53,7 +53,7 @@ Hello, ARM!
 ## 1.4)
 Strings kopieren zu können ist ein wichtiges Feature jeder Programmiersprache und auch
 für die folgenden Übungen wäre eine Kopierfunktion durchaus nützlich. Implementieren Sie
-eine Funktion namens __strncopy__, die als erstes Argument die Adresse eines Zielstrings (Buffer) erhält,
+eine Funktion namens __strncpy__, die als erstes Argument die Adresse eines Zielstrings erhält,
 als zweites Argument die Adresse des zu kopierenden Strings und als drittes Argument die Anzahl
 an Bytes die es zu kopieren gilt. Die Funktion soll die Adresse des Zielstrings zurückliefern.
 
