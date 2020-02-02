@@ -61,11 +61,23 @@ an Bytes die es zu kopieren gilt. Die Funktion soll die Adresse des Zielstrings 
 
 Vergewissern Sie sich, dass der dest String immer NULL terminiert ist, d.h. dest[n-1] = '\0'.
 
-Testen Sie die Funktion mittels GDB. Kopieren Sie einen String und geben sie Original und Kopie auf
-der Kommandozeile aus.
+Testen Sie die Funktion mittels GDB. Kopieren Sie einen String und geben Sie diesen auf der Kommandozeile aus.
+Experimentieren Sie mit verschiedenen Eingabelängen für strncpy.
 
 ### Beispielausgabe
+für n=6
 ```
-Hello, ARM!
-Hello, ARM!
+Hello
 ```
+
+## 1.5)
+Die in Aufgabe 1.3) implementierte Funktion __puts__ unterscheidet sich in einem entscheidenden Aspekt von der Version,
+die man aus der Programmiersprache C kennt. Dort gibt __puts__ nicht nur den String aus, sondern hängt auch noch einen
+line feed ('\n') an das Ende des Strings, wodurch es auf der Kommandozeile zu einem Zeilenumbruch kommt.
+
+Erweitern Sie Ihre Funktion, sodass diese das gleiche Verhalten aufweist.
+
+### Einschränkung
+Der __write__ Syscall soll nur ein einziges mal aufgerufen werden.
+
+
