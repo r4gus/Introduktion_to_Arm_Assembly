@@ -75,52 +75,37 @@ strlen:
 @ Returns:	pointer to the destination string
 .global strncpy
 strncpy:
-	push {r4, r5, lr}
+	push {r4, lr}
 	dst .req r0
 	src .req r1
 	n   .req r2
 	i   .req r3
 	buf .req r4
-	j   .req r5
 
 	eor i, i		@ i := 0
-	mov j, n, lsr #2	@ j := n / 4
 	sub n, n, #0x1		@ n := n - 1
 	
-	@ copy word wise
-	strncpy_cpy_loop1:
-		cmp j, #0x0
-		ble strncpy_cpy_break1
-
-		ldr buf, [src, i]
-		str buf, [dst, i]
-
-		add i, i, #0x4
-		sub j, j, #0x1
-		b strncpy_cpy_loop1
-	strncpy_cpy_break1:
-	
 	@ copy byte wise
-	strncpy_cpy_loop2:
+	strncpy_cpy_loop:
 		cmp i, n
-		bge strncpy_cpy_break2
+		bge strncpy_cpy_break
 
 		ldrb buf, [src, i]	
 		strb buf, [dst, i]
 
 		add i, i, #0x1
-		b strncpy_cpy_loop2
-	strncpy_cpy_break2:
-
-	strb j, [dst, n]	@ dst[n] := '\0'
+		b strncpy_cpy_loop
+	strncpy_cpy_break:
+	
+	eor i, i
+	strb i, [dst, n]	@ dst[n] := '\0'
 
 	.unreq dst
 	.unreq src
 	.unreq n
 	.unreq i
 	.unreq buf
-	.unreq j
-	pop {r4, r5, pc}
+	pop {r4, pc}
 
 
 

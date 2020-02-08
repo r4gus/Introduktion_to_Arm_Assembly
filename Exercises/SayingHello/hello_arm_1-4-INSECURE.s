@@ -12,7 +12,7 @@
 
 
 .section .data
-hello:	.asciz "Hello, ARM!"
+hello:	.asciz "Hello, ARM!\n"
 str:	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0
 
 .section .text
@@ -134,54 +134,18 @@ strncpy:
 @ Returns: 	void	
 .global puts
 puts:
-	push {r4, r5, r6, r8, lr}
-	mov r8, sp
-	saved_sp .req r8
-
+	push {r4, lr}
 	mov r4, r0
 	bl strlen
-	mov r5, r0
-
-	src .req r4
-	len .req r5
-
-	@ allocate memory for the string
-	@sub sp, sp, len, lsl #0x2		@ sp := sp - (strlen(str)*4)
-	add len, #0x2
-	sub sp, sp, len
-	mov r6, sp
-	buf .req r6
-
-	@ copy the string on the stack
-	mov r0, buf
-	mov r1, src
-	mov r2, len
-	add r2, r2, #0x1
-	bl strncpy
-
-	@ append '\n' and '\0'
-	mov r0, len
-	mov r1, #0xa
-	strb r1, [buf, r0]			@ buf[len] := '\n'
-	add r0, r0, #0x1
-	eor r1, r1
-	strb r1, [buf, r0]			@ buf[len+1] := '\0'
-
-	@ write to stdout
+	mov r2, r0
+	mov r1, r4
 	mov r0, #STDOUT
-	mov r1, buf
-	mov r2, len
-	add r2, r2, #0x1
 	mov r7, #WRITE
 	svc 0
-	
-	mov sp, saved_sp
-	.unreq src
-	.unreq len
-	.unreq buf
-	.unreq saved_sp
+	pop {r4, pc}
 
-	pop {r4, r5, r6, r8, pc}
+
+
 
 
 
