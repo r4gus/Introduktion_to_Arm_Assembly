@@ -16,7 +16,7 @@ Hello, ARM!
 ### Einschränkungen
 Nutzen Sie nicht den __ldr <Rd>, =imm__ Pseudobefehl
 
-## 1.2) 
+## 1.2) Strlen
 Die Länge eines Strings dynamisch zur Laufzeit bestimmen zu können
 ist nützlich, da so Strings ausgegeben werden können ohne deren Länge
 im Vorfeld wissen zu müssen.
@@ -35,7 +35,7 @@ zu berechnen.
 Hello, ARM!
 ```
 
-## 1.3) 
+## 1.3) Puts v1
 Kapseln Sie den Code zur Ausgabe des Strings in einer neuen
 Funktion namens __puts__. Die Funktion soll die Adresse eines 
 beliebigen __NULL terminierten__ Strings als argument übergeben
@@ -50,7 +50,7 @@ Tip: Für eine Übersicht über alle ASCII Symbole siehen __man ascii__.
 Hello, ARM!
 ```
 
-## 1.4)
+## 1.4) Strncpy
 Strings kopieren zu können ist ein wichtiges Feature jeder Programmiersprache und auch
 für die folgenden Übungen wäre eine Kopierfunktion durchaus nützlich. Implementieren Sie
 eine Funktion namens __strncpy__, die als erstes Argument die Adresse eines Zielstrings erhält,
@@ -70,7 +70,7 @@ für n=6
 Hello
 ```
 
-## 1.5)
+## 1.5) Puts v2
 Die in Aufgabe 1.3) implementierte Funktion __puts__ unterscheidet sich in einem entscheidenden Aspekt von der Version,
 die man aus der Programmiersprache C kennt. Dort gibt __puts__ nicht nur den String aus, sondern hängt auch noch einen
 line feed ('\n') an das Ende des Strings, wodurch es auf der Kommandozeile zu einem Zeilenumbruch kommt.
