@@ -1,0 +1,174 @@
+\documentclass[12pt]{article}
+\parindent0em
+\parskip 1ex plus 0.4ex minus 0.4ex
+
+\usepackage[a4paper,vmargin=30mm,hmargin=25mm]{geometry}
+\usepackage{polyglossia}
+\setdefaultlanguage{german}
+\usepackage{fontspec}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{lstbackground}{rgb}{0.95,0.95,1}      % hellgruener Rahmen
+
+\newcommand{\instruction}[1]{\textbf{\texttt{\color{blue}#1}}}
+
+\definecolor{codegreen}{rgb}{0,0.3,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{blue}{RGB}{0,0,255}
+\definecolor{gray}{RGB}{224,224,224}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    %numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4,
+    morekeywords={add, adc, sub, sbc, mul, mla, 
+    and, orr, eor, bic, cmp, cmn, tst, teq,
+    mov, mvn, adds, adcs, subs, sbcs,
+    muls, mlas, ands, orrs, eors, bics, cmp, cmn, tst, teq,
+    mov, mvn, b, bl, blx, beq, bne, blt, bgt, bcs, bcc, bmi, bpl,
+    bvs, bvc, bhi, bls, bge, ble,addeq,addne,addcs,addcc,addmi,addpl,addvs,addvc,
+    addhi,addls,addge,addlt,addgt,addle,adceq,adcne,adccs,adccc,adcmi,adcpl,adcvs,
+    adcvc,adchi,adcls,adcge,adclt,adcgt,adcle,subeq,subne,subcs,subcc,submi,subpl,
+    subvs,subvc,subhi,subls,subge,sublt,subgt,suble,sbceq,sbcne,sbccs,sbccc,sbcmi,
+    sbcpl,sbcvs,sbcvc,sbchi,sbcls,sbcge,sbclt,sbcgt,sbcle,muleq,mulne,mulcs,mulcc,
+    mulmi,mulpl,mulvs,mulvc,mulhi,mulls,mulge,mullt,mulgt,mulle,mlaeq,mlane,mlacs,
+    mlacc,mlami,mlapl,mlavs,mlavc,mlahi,mlals,mlage,mlalt,mlagt,mlale,andeq,andne,
+    andcs,andcc,andmi,andpl,andvs,andvc,andhi,andls,andge,andlt,andgt,andle,orreq,
+    orrne,orrcs,orrcc,orrmi,orrpl,orrvs,orrvc,orrhi,orrls,orrge,orrlt,orrgt,orrle,
+    eoreq,eorne,eorcs,eorcc,eormi,eorpl,eorvs,eorvc,eorhi,eorls,eorge,eorlt,eorgt,
+    eorle,biceq,bicne,biccs,biccc,bicmi,bicpl,bicvs,bicvc,bichi,bicls,bicge,biclt,
+    bicgt,bicle,cmpeq,cmpne,cmpcs,cmpcc,cmpmi,cmppl,cmpvs,cmpvc,cmphi,cmpls,cmpge,
+    cmplt,cmpgt,cmple,cmneq,cmnne,cmncs,cmncc,cmnmi,cmnpl,cmnvs,cmnvc,cmnhi,cmnls,
+    cmnge,cmnlt,cmngt,cmnle,tsteq,tstne,tstcs,tstcc,tstmi,tstpl,tstvs,tstvc,tsthi,
+    tstls,tstge,tstlt,tstgt,tstle,teqeq,teqne,teqcs,teqcc,teqmi,teqpl,teqvs,teqvc,
+    teqhi,teqls,teqge,teqlt,teqgt,teqle,moveq,movne,movcs,movcc,movmi,movpl,movvs,
+    movvc,movhi,movls,movge,movlt,movgt,movle,mvneq,mvnne,mvncs,mvncc,mvnmi,mvnpl,
+    mvnvs,mvnvc,mvnhi,mvnls,mvnge,mvnlt,mvngt,mvnle,ADD,ADDS,ADDEQ,ADDEQS,ADDNE,ADDNES,ADDCS,ADDCSS,ADDCC,ADDCCS,ADDMI,ADDMIS,ADDPL,ADDPLS,ADDVS,ADDVSS,ADDVC,ADDVCS,ADDHI,ADDHIS,ADDLS,ADDLSS,ADDGE,ADDGES,ADDLT,ADDLTS,ADDGT,ADDGTS,ADDLE,ADDLES,ADC,ADCS,ADCEQ,ADCEQS,ADCNE,ADCNES,ADCCS,ADCCSS,ADCCC,ADCCCS,ADCMI,ADCMIS,ADCPL,ADCPLS,ADCVS,ADCVSS,ADCVC,ADCVCS,ADCHI,ADCHIS,ADCLS,ADCLSS,ADCGE,ADCGES,ADCLT,ADCLTS,ADCGT,ADCGTS,ADCLE,ADCLES,SUB,SUBS,SUBEQ,SUBEQS,SUBNE,SUBNES,SUBCS,SUBCSS,SUBCC,SUBCCS,SUBMI,SUBMIS,SUBPL,SUBPLS,SUBVS,SUBVSS,SUBVC,SUBVCS,SUBHI,SUBHIS,SUBLS,SUBLSS,SUBGE,SUBGES,SUBLT,SUBLTS,SUBGT,SUBGTS,SUBLE,SUBLES,SBC,SBCS,SBCEQ,SBCEQS,SBCNE,SBCNES,SBCCS,SBCCSS,SBCCC,SBCCCS,SBCMI,SBCMIS,SBCPL,SBCPLS,SBCVS,SBCVSS,SBCVC,SBCVCS,SBCHI,SBCHIS,SBCLS,SBCLSS,SBCGE,SBCGES,SBCLT,SBCLTS,SBCGT,SBCGTS,SBCLE,SBCLES,MUL,MULS,MULEQ,MULEQS,MULNE,MULNES,MULCS,MULCSS,MULCC,MULCCS,MULMI,MULMIS,MULPL,MULPLS,MULVS,MULVSS,MULVC,MULVCS,MULHI,MULHIS,MULLS,MULLSS,MULGE,MULGES,MULLT,MULLTS,MULGT,MULGTS,MULLE,MULLES,MLA,MLAS,MLAEQ,MLAEQS,MLANE,MLANES,MLACS,MLACSS,MLACC,MLACCS,MLAMI,MLAMIS,MLAPL,MLAPLS,MLAVS,MLAVSS,MLAVC,MLAVCS,MLAHI,MLAHIS,MLALS,MLALSS,MLAGE,MLAGES,MLALT,MLALTS,MLAGT,MLAGTS,MLALE,MLALES,AND,ANDS,ANDEQ,ANDEQS,ANDNE,ANDNES,ANDCS,ANDCSS,ANDCC,ANDCCS,ANDMI,ANDMIS,ANDPL,ANDPLS,ANDVS,ANDVSS,ANDVC,ANDVCS,ANDHI,ANDHIS,ANDLS,ANDLSS,ANDGE,ANDGES,ANDLT,ANDLTS,ANDGT,ANDGTS,ANDLE,ANDLES,ORR,ORRS,ORREQ,ORREQS,ORRNE,ORRNES,ORRCS,ORRCSS,ORRCC,ORRCCS,ORRMI,ORRMIS,ORRPL,ORRPLS,ORRVS,ORRVSS,ORRVC,ORRVCS,ORRHI,ORRHIS,ORRLS,ORRLSS,ORRGE,ORRGES,ORRLT,ORRLTS,ORRGT,ORRGTS,ORRLE,ORRLES,EOR,EORS,EOREQ,EOREQS,EORNE,EORNES,EORCS,EORCSS,EORCC,EORCCS,EORMI,EORMIS,EORPL,EORPLS,EORVS,EORVSS,EORVC,EORVCS,EORHI,EORHIS,EORLS,EORLSS,EORGE,EORGES,EORLT,EORLTS,EORGT,EORGTS,EORLE,EORLES,BIC,BICS,BICEQ,BICEQS,BICNE,BICNES,BICCS,BICCSS,BICCC,BICCCS,BICMI,BICMIS,BICPL,BICPLS,BICVS,BICVSS,BICVC,BICVCS,BICHI,BICHIS,BICLS,BICLSS,BICGE,BICGES,BICLT,BICLTS,BICGT,BICGTS,BICLE,BICLES,CMP,CMPS,CMPEQ,CMPEQS,CMPNE,CMPNES,CMPCS,CMPCSS,CMPCC,CMPCCS,CMPMI,CMPMIS,CMPPL,CMPPLS,CMPVS,CMPVSS,CMPVC,CMPVCS,CMPHI,CMPHIS,CMPLS,CMPLSS,CMPGE,CMPGES,CMPLT,CMPLTS,CMPGT,CMPGTS,CMPLE,CMPLES,CMN,CMNS,CMNEQ,CMNEQS,CMNNE,CMNNES,CMNCS,CMNCSS,CMNCC,CMNCCS,CMNMI,CMNMIS,CMNPL,CMNPLS,CMNVS,CMNVSS,CMNVC,CMNVCS,CMNHI,CMNHIS,CMNLS,CMNLSS,CMNGE,CMNGES,CMNLT,CMNLTS,CMNGT,CMNGTS,CMNLE,CMNLES,TST,TSTS,TSTEQ,TSTEQS,TSTNE,TSTNES,TSTCS,TSTCSS,TSTCC,TSTCCS,TSTMI,TSTMIS,TSTPL,TSTPLS,TSTVS,TSTVSS,TSTVC,TSTVCS,TSTHI,TSTHIS,TSTLS,TSTLSS,TSTGE,TSTGES,TSTLT,TSTLTS,TSTGT,TSTGTS,TSTLE,TSTLES,TEQ,TEQS,TEQEQ,TEQEQS,TEQNE,TEQNES,TEQCS,TEQCSS,TEQCC,TEQCCS,TEQMI,TEQMIS,TEQPL,TEQPLS,TEQVS,TEQVSS,TEQVC,TEQVCS,TEQHI,TEQHIS,TEQLS,TEQLSS,TEQGE,TEQGES,TEQLT,TEQLTS,TEQGT,TEQGTS,TEQLE,TEQLES,MOV,MOVS,MOVEQ,MOVEQS,MOVNE,MOVNES,MOVCS,MOVCSS,MOVCC,MOVCCS,MOVMI,MOVMIS,MOVPL,MOVPLS,MOVVS,MOVVSS,MOVVC,MOVVCS,MOVHI,MOVHIS,MOVLS,MOVLSS,MOVGE,MOVGES,MOVLT,MOVLTS,MOVGT,MOVGTS,MOVLE,MOVLES,MVN,MVNS,MVNEQ,MVNEQS,MVNNE,MVNNES,MVNCS,MVNCSS,MVNCC,MVNCCS,MVNMI,MVNMIS,MVNPL,MVNPLS,MVNVS,MVNVSS,MVNVC,MVNVCS,MVNHI,MVNHIS,MVNLS,MVNLSS,MVNGE,MVNGES,MVNLT,MVNLTS,MVNGT,MVNGTS,MVNLE,MVNLES,LDR,LDRS,LDREQ,LDREQS,LDRNE,LDRNES,LDRCS,LDRCSS,LDRCC,LDRCCS,LDRMI,LDRMIS,LDRPL,LDRPLS,LDRVS,LDRVSS,LDRVC,LDRVCS,LDRHI,LDRHIS,LDRLS,LDRLSS,LDRGE,LDRGES,LDRLT,LDRLTS,LDRGT,LDRGTS,LDRLE,LDRLES,STR,STRS,STREQ,STREQS,STRNE,STRNES,STRCS,STRCSS,STRCC,STRCCS,STRMI,STRMIS,STRPL,STRPLS,STRVS,STRVSS,STRVC,STRVCS,STRHI,STRHIS,STRLS,STRLSS,STRGE,STRGES,STRLT,STRLTS,STRGT,STRGTS,STRLE,STRLES,LDM,LDMS,LDMEQ,LDMEQS,LDMNE,LDMNES,LDMCS,LDMCSS,LDMCC,LDMCCS,LDMMI,LDMMIS,LDMPL,LDMPLS,LDMVS,LDMVSS,LDMVC,LDMVCS,LDMHI,LDMHIS,LDMLS,LDMLSS,LDMGE,LDMGES,LDMLT,LDMLTS,LDMGT,LDMGTS,LDMLE,LDMLES,STM,STMS,STMEQ,STMEQS,STMNE,STMNES,STMCS,STMCSS,STMCC,STMCCS,STMMI,STMMIS,STMPL,STMPLS,STMVS,STMVSS,STMVC,STMVCS,STMHI,STMHIS,STMLS,STMLSS,STMGE,STMGES,STMLT,STMLTS,STMGT,STMGTS,STMLE,STMLES,LDMDB,LDMDBS,LDMDBEQ,LDMDBEQS,LDMDBNE,LDMDBNES,LDMDBCS,LDMDBCSS,LDMDBCC,LDMDBCCS,LDMDBMI,LDMDBMIS,LDMDBPL,LDMDBPLS,LDMDBVS,LDMDBVSS,LDMDBVC,LDMDBVCS,LDMDBHI,LDMDBHIS,LDMDBLS,LDMDBLSS,LDMDBGE,LDMDBGES,LDMDBLT,LDMDBLTS,LDMDBGT,LDMDBGTS,LDMDBLE,LDMDBLES,LDMDA,LDMDAS,LDMDAEQ,LDMDAEQS,LDMDANE,LDMDANES,LDMDACS,LDMDACSS,LDMDACC,LDMDACCS,LDMDAMI,LDMDAMIS,LDMDAPL,LDMDAPLS,LDMDAVS,LDMDAVSS,LDMDAVC,LDMDAVCS,LDMDAHI,LDMDAHIS,LDMDALS,LDMDALSS,LDMDAGE,LDMDAGES,LDMDALT,LDMDALTS,LDMDAGT,LDMDAGTS,LDMDALE,LDMDALES,LDMIB,LDMIBS,LDMIBEQ,LDMIBEQS,LDMIBNE,LDMIBNES,LDMIBCS,LDMIBCSS,LDMIBCC,LDMIBCCS,LDMIBMI,LDMIBMIS,LDMIBPL,LDMIBPLS,LDMIBVS,LDMIBVSS,LDMIBVC,LDMIBVCS,LDMIBHI,LDMIBHIS,LDMIBLS,LDMIBLSS,LDMIBGE,LDMIBGES,LDMIBLT,LDMIBLTS,LDMIBGT,LDMIBGTS,LDMIBLE,LDMIBLES,LDMIA,LDMIAS,LDMIAEQ,LDMIAEQS,LDMIANE,LDMIANES,LDMIACS,LDMIACSS,LDMIACC,LDMIACCS,LDMIAMI,LDMIAMIS,LDMIAPL,LDMIAPLS,LDMIAVS,LDMIAVSS,LDMIAVC,LDMIAVCS,LDMIAHI,LDMIAHIS,LDMIALS,LDMIALSS,LDMIAGE,LDMIAGES,LDMIALT,LDMIALTS,LDMIAGT,LDMIAGTS,LDMIALE,LDMIALES,STMDB,STMDBS,STMDBEQ,STMDBEQS,STMDBNE,STMDBNES,STMDBCS,STMDBCSS,STMDBCC,STMDBCCS,STMDBMI,STMDBMIS,STMDBPL,STMDBPLS,STMDBVS,STMDBVSS,STMDBVC,STMDBVCS,STMDBHI,STMDBHIS,STMDBLS,STMDBLSS,STMDBGE,STMDBGES,STMDBLT,STMDBLTS,STMDBGT,STMDBGTS,STMDBLE,STMDBLES,STMDA,STMDAS,STMDAEQ,STMDAEQS,STMDANE,STMDANES,STMDACS,STMDACSS,STMDACC,STMDACCS,STMDAMI,STMDAMIS,STMDAPL,STMDAPLS,STMDAVS,STMDAVSS,STMDAVC,STMDAVCS,STMDAHI,STMDAHIS,STMDALS,STMDALSS,STMDAGE,STMDAGES,STMDALT,STMDALTS,STMDAGT,STMDAGTS,STMDALE,STMDALES,STMIB,STMIBS,STMIBEQ,STMIBEQS,STMIBNE,STMIBNES,STMIBCS,STMIBCSS,STMIBCC,STMIBCCS,STMIBMI,STMIBMIS,STMIBPL,STMIBPLS,STMIBVS,STMIBVSS,STMIBVC,STMIBVCS,STMIBHI,STMIBHIS,STMIBLS,STMIBLSS,STMIBGE,STMIBGES,STMIBLT,STMIBLTS,STMIBGT,STMIBGTS,STMIBLE,STMIBLES,STMIA,STMIAS,STMIAEQ,STMIAEQS,STMIANE,STMIANES,STMIACS,STMIACSS,STMIACC,STMIACCS,STMIAMI,STMIAMIS,STMIAPL,STMIAPLS,STMIAVS,STMIAVSS,STMIAVC,STMIAVCS,STMIAHI,STMIAHIS,STMIALS,STMIALSS,STMIAGE,STMIAGES,STMIALT,STMIALTS,STMIAGT,STMIAGTS,STMIALE,STMIALES,ldreq,ldrne,ldrcs,ldrcc,ldrmi,ldrpl,ldrvs,ldrvc,ldrhi,ldrls,ldrge,ldrlt,ldrgt,ldrle,streq,strne,strcs,strcc,strmi,strpl,strvs,strvc,strhi,strls,strge,strlt,strgt,strle,ldmeq,ldmne,ldmcs,ldmcc,ldmmi,ldmpl,ldmvs,ldmvc,ldmhi,ldmls,ldmge,ldmlt,ldmgt,ldmle,stmeq,stmne,stmcs,stmcc,stmmi,stmpl,stmvs,stmvc,stmhi,stmls,stmge,stmlt,stmgt,stmle,ldmiaeq,ldmiane,ldmiacs,ldmiacc,ldmiami,ldmiapl,ldmiavs,ldmiavc,ldmiahi,ldmials,ldmiage,ldmialt,ldmiagt,ldmiale,ldmibeq,ldmibne,ldmibcs,ldmibcc,ldmibmi,ldmibpl,ldmibvs,ldmibvc,ldmibhi,ldmibls,ldmibge,ldmiblt,ldmibgt,ldmible,ldmdaeq,ldmdane,ldmdacs,ldmdacc,ldmdami,ldmdapl,ldmdavs,ldmdavc,ldmdahi,ldmdals,ldmdage,ldmdalt,ldmdagt,ldmdale,ldmdbeq,ldmdbne,ldmdbcs,ldmdbcc,ldmdbmi,ldmdbpl,ldmdbvs,ldmdbvc,ldmdbhi,ldmdbls,ldmdbge,ldmdblt,ldmdbgt,ldmdble,stmiaeq,stmiane,stmiacs,stmiacc,stmiami,stmiapl,stmiavs,stmiavc,stmiahi,stmials,stmiage,stmialt,stmiagt,stmiale,stmibeq,stmibne,stmibcs,stmibcc,stmibmi,stmibpl,stmibvs,stmibvc,stmibhi,stmibls,stmibge,stmiblt,stmibgt,stmible,stmdbeq,stmdbne,stmdbcs,stmdbcc,stmdbmi,stmdbpl,stmdbvs,stmdbvc,stmdbhi,stmdbls,stmdbge,stmdblt,stmdbgt,stmdble,stmdaeq,stmdane,stmdacs,stmdacc,stmdami,stmdapl,stmdavs,stmdavc,stmdahi,stmdals,stmdage,stmdalt,stmdagt,stmdale,
+ldr,str,ldm,stm, adr, svc, SVC, swi, SWI, bx, blx, BLX, BX, push, pop, PUSH,
+POP, umull},
+  literate=%
+  {Ö}{{\"O}}1
+  {Ä}{{\"A}}1
+  {Ü}{{\"U}}1
+  {ß}{{\ss}}1
+  {ü}{{\"u}}1
+  {ä}{{\"a}}1
+  {ö}{{\"o}}1
+  {~}{{\textasciitilde}}1
+}
+ 
+\lstset{style=mystyle}
+
+\begin{document}
+
+\begin{center}
+  \textbf{\LARGE Name der Vorlesung} \\[1ex]%
+  \textbf{\Large Aufgaben zu Einführung in die ARM Assembler Sprache}\\[2ex] %
+  
+\end{center}
+
+% ****************************************************************************
+\section{Aufgabe 1 - Verständniss}
+% ****************************************************************************
+
+% ----------------------------------------------------------------------------
+\subsection{Allgemeines}
+% ----------------------------------------------------------------------------
+
+\begin{itemize}
+ \item Welches Speichermodell verwenden die ARM Architekturen ?
+ \item Welche Wortbreite besitzt eine Instruktion ?
+ \item Welche der ARM Instruktionen verwenden Erweiterungsworte ?
+ \item Wie werden Instruktionen verarbeitet ?
+ \item Angenommen zum Zeitpunkt n wird eine ADD Instruktion, an der Adresse
+     \texttt{0xAFF6}, tatsächlich ausgeführt, an welcher Adresse befindet sich
+        der \texttt{PC}, wenn sich der Prozessor im ARM Modus befindet?
+ \item Was ist die Tool Chain? Geben pro Programmierwerkzeug eine kurze
+     Beschreibung.
+ \item Aus welchen Sektionen besteht eine Assembler Quelldatei?
+ \item Zeichnen Sie das typische Speicher-Layout eines Prozesses unter Linux.
+\end{itemize}
+
+% ----------------------------------------------------------------------------
+\subsection{Bits and Bytes}
+% ----------------------------------------------------------------------------
+
+\begin{itemize}
+    \item Welche Größe (in Bit) besitzen: \texttt{BYTE, HALF WORD, WORD, DOUBLE WORD}?
+    \item Welche Endianness wird unter ARM genutzt?
+    \item Beschreiben Sie \texttt{Little Endian} in einem Satz.
+\end{itemize}
+
+% ----------------------------------------------------------------------------
+\subsection{Register}
+% ----------------------------------------------------------------------------
+
+\begin{itemize}
+    \item Was sind \texttt{Callee Save Register}?
+    \item Welches Register (rX) stellt den Program Counter dar?
+    \item Was ist der Zweck des Link Registers? Was ist in dieser Hinsicht der
+        Unterschied zu x86?
+    \item Nennen Sie die Flags, die für bedingte Instruktionen zur verfügung stehen.
+    \item Nennen Sie zwei Prozessor Modi und beschreiben Sie diese kurz.
+\end{itemize}
+
+% ***************************************************************************
+\section{Data Processing Instructions}
+% ***************************************************************************
+Für die nachfolgenden Aufgaben wird ein Arm Computer, wie z.B. Raspberry Pi,
+oder ein Emulator, wie z.B. Quemu, benötigt, sowie ein Linux Betriebssystem.
+
+Die Beschreibungen beziehen sich auf eine ARM Entwicklungsumgebung
+bestehend aus eine \texttt{Raspberry Pi 3} auf dem \texttt{Raspbian} installiert
+wurde.
+
+% ----------------------------------------------------------------------------
+\subsection{Einrichten der Entwicklungsumgebung}
+% ----------------------------------------------------------------------------
+Sie können den Raspberry Pi mittels HDMI und USB direkt mit einem Monitor, sowie
+Tastatur verbinden. 
+
+Als Alternative können Sie sich auch mittels \texttt{SSH},
+von einem anderen Computer aus, mit dem Raspberry Pi verbinden. Dafür müssen Sie
+sich im selben Netzwerk befinden. 
+
+
+
+\begin{lstlisting}
+def gcd(a,b):
+    if b==0:
+        return a
+    else:
+        return gcd(b, a%b)
+
+a = 5125
+b = 6200
+
+print "gcd(%d,%d)=%d" % (a,b,gcd(a,b))
+\end{lstlisting}
+\end{document}
+
+%%% Local Variables: 
+%%% TeX-PDF-mode: t
+%%% TeX-master: t
+%%% coding: utf-8
+%%% mode: latex
+%%% TeX-engine: xetex
+%%% End: 
