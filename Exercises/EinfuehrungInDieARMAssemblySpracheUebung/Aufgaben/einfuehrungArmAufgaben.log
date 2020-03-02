@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2020.2.8)  14 FEB 2020 14:13
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2020.2.8)  17 FEB 2020 21:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -460,12 +460,12 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 
 ] [2] (./einfuehrungArmAufgaben.aux) ) 
 Here is how much of TeX's memory you used:
- 17004 strings out of 492909
- 344227 string characters out of 6135048
- 643081 words of memory out of 5000000
- 21015 multiletter control sequences out of 15000+600000
+ 17001 strings out of 492909
+ 344214 string characters out of 6135048
+ 631081 words of memory out of 5000000
+ 21012 multiletter control sequences out of 15000+600000
  532418 words of font info for 34 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 46i,6n,70p,7141b,2227s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 46i,6n,70p,7141b,2208s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on einfuehrungArmAufgaben.pdf (2 pages).

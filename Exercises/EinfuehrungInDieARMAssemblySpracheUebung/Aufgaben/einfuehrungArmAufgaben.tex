@@ -122,7 +122,7 @@ POP, umull},
 
 \begin{itemize}
     \item Was sind \texttt{Callee Save Register}?
-    \item Welches Register (rX) stellt den Program Counter dar?
+    \item Welches Register (Rx) stellt den Program Counter dar?
     \item Was ist der Zweck des Link Registers? Was ist in dieser Hinsicht der
         Unterschied zu x86?
     \item Nennen Sie die Flags, die für bedingte Instruktionen zur verfügung stehen.
@@ -147,22 +147,60 @@ Tastatur verbinden.
 
 Als Alternative können Sie sich auch mittels \texttt{SSH},
 von einem anderen Computer aus, mit dem Raspberry Pi verbinden. Dafür müssen Sie
-sich im selben Netzwerk befinden. 
-
-
+sich im selben Netzwerk befinden. Für den Verbindungsaufbau benötigen Sie
+weiterhin die IP-Adresse des Gerätes. Angenommen Sie möchten sich als Nutzer
+\texttt{pi} auf dem Gerät mit der IP-Adresse \texttt{192.168.62.255} einlogen,
+dann können Sie dies über die Konsole mit folgendem Befehl bewerkstelligen:
 
 \begin{lstlisting}
-def gcd(a,b):
-    if b==0:
-        return a
-    else:
-        return gcd(b, a%b)
-
-a = 5125
-b = 6200
-
-print "gcd(%d,%d)=%d" % (a,b,gcd(a,b))
+ssh pi@192.168.62.255
 \end{lstlisting}
+
+% ----------------------------------------------------------------------------
+\subsection{Dividieren mal anders}
+% ----------------------------------------------------------------------------
+\subsubsection{a)}
+Auf modernen Systemen ist ein Dividierwerk standard, mit dem ein Zahl durch eine
+andere, mittels Hardware, geteilt werden kann. Die Armv-8 Architektur bietet
+die Instruktionen \texttt{UDIV} und \texttt{SDIV} um vorzeichenlose bzw.
+vorzeichenbehaftete Zahlen zu dividieren. Ältere Architekturen besitzten diese
+Möglichkeit nicht. Dort können Divisionen in Software, d.h. durch eine Funktion, realisiert. 
+Solche Dividieralgorithmen sind jedoch sehr ineffizient und benötigen viele
+Taktzyklen.
+
+Berechnen Sie \texttt{(7 * 5) / 3 + 21} mit so wenigen Instruktionen wie
+möglich, ohne die Verwendung eines Multiplikations- oder Dividierbefehls und
+ohne die einzelnene Zahlen im Vorraus zusammenzufassen.
+
+\subsubsection{b)}
+Für einen Zyklischen Buffer der größe \texttt{buffer\_size} der mittels
+\texttt{offset} indiziert wird, könnte eine erhöhung um \texttt{n} Wörter wie
+folgt aussehen:
+
+\begin{lstlisting}
+offset = (offset + n) % buffer_size;
+\end{lstlisting}
+
+Angenommen der obige Ausdruck benötigt 50 Taktzyklen zur berechnung, geben Sie
+eine, ihrer Meinung nach, effizientere Lösung an. Implementieren Sie ihre Lösung
+in Assembly. Wie viele effektive Taktzyklen benötigt Ihre Implementierung?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
 
 %%% Local Variables: 
