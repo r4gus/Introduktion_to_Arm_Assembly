@@ -6,6 +6,11 @@
 .equ SIGNED, 3
 
 .data
+@ Your initialized data
+
+
+.bss
+@ Your uninitialized data
 
 
 .text
