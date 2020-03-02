@@ -156,6 +156,47 @@ dann können Sie dies über die Konsole mit folgendem Befehl bewerkstelligen:
 ssh pi@192.168.62.255
 \end{lstlisting}
 
+
+% ----------------------------------------------------------------------------
+\subsection{Bearbeitung der Aufgaben}
+% ----------------------------------------------------------------------------
+Für die Bearbeitung der Aufgaben steht Ihnen eine Template Datei namens
+\texttt{template.s} zur verfügung. Diese kann verwendet werden um die einzelnen
+Aufgaben zu bearbeiten.
+
+In der \texttt{main} Subroutine befindet sich bereits Beispielcode, der ersetzt
+werden kann. Außerdem können natürlich weitere Funktionen definiert werden.
+
+Sie können Ihren Source Code mithilfe des Compilerscripts \texttt{compiel.sh}
+compilieren, dabei wird der Code von \texttt{debug.c} mit verlinkt, der Ihnen
+die Möglichkeit bietet, Ihre Resultate auf der Kommandozeile auszugeben.
+
+\begin{lstlisting}
+./compile.sh template.s
+\end{lstlisting}
+
+Um Ihr ergebnis auszugeben, können Sie die \texttt{info()} funktion aufrufen.
+Diese erwartet als erstes Argument das ausgabe Format, d.h.
+\texttt{Hexadezimal, Oktal, vorzeichenbehafteter Integer, vorzeichenloser
+Integer} und als zweites Argument den auszugebenden Wert.
+
+\begin{lstlisting}
+void info(const int func, const int val);
+\end{lstlisting}
+
+Angenommen es wurde eine simple Additionsfunktion implementiert und das Ergebnis
+soll nun als Hexadezimalwert ausgegeben werden, dann kann \texttt{info} wie
+folgt aufgerufen werden.
+
+\begin{lstlisting}
+Vorbedingung: Der auszugebende Wert befindet sich in R0
+
+mov r1, r0   @ pass value as second argument
+mov r0, #HEX @ specify output format
+bl  info     @ call info
+\end{lstlisting}
+
+
 % ----------------------------------------------------------------------------
 \subsection{Dividieren mal anders}
 % ----------------------------------------------------------------------------
@@ -164,7 +205,7 @@ Auf modernen Systemen ist ein Dividierwerk standard, mit dem ein Zahl durch eine
 andere, mittels Hardware, geteilt werden kann. Die Armv-8 Architektur bietet
 die Instruktionen \texttt{UDIV} und \texttt{SDIV} um vorzeichenlose bzw.
 vorzeichenbehaftete Zahlen zu dividieren. Ältere Architekturen besitzten diese
-Möglichkeit nicht. Dort können Divisionen in Software, d.h. durch eine Funktion, realisiert. 
+Möglichkeit nicht. Dort werden Divisionen in Software, d.h. durch eine Funktion, realisiert. 
 Solche Dividieralgorithmen sind jedoch sehr ineffizient und benötigen viele
 Taktzyklen.
 
@@ -181,7 +222,8 @@ folgt aussehen:
 offset = (offset + n) % buffer_size;
 \end{lstlisting}
 
-Angenommen der obige Ausdruck benötigt 50 Taktzyklen zur berechnung, geben Sie
+Angenommen der obige Ausdruck benötigt 50 Taktzyklen zur berechnung (aufgrund
+der Modulo Rechnung), geben Sie
 eine, ihrer Meinung nach, effizientere Lösung an. Implementieren Sie ihre Lösung
 in Assembly. Wie viele effektive Taktzyklen benötigt Ihre Implementierung?
 

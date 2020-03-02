@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2020.2.8)  17 FEB 2020 21:56
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2020.2.8)  2 MAR 2020 12:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -458,14 +458,26 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 \c@lstlisting=\count269
 [1
 
-] [2] (./einfuehrungArmAufgaben.aux) ) 
+]
+Overfull \hbox (6.16792pt too wide) in paragraph at lines 178--182
+\TU/lmr/m/n/12 erstes Argument das ausgabe Format, d.h. \TU/lmtt/m/n/12 Hexadez
+imal, Oktal, vorzeichenbehafteter
+ []
+
+
+Overfull \hbox (5.75189pt too wide) in paragraph at lines 178--182
+\TU/lmtt/m/n/12 Integer, vorzeichenloser Integer \TU/lmr/m/n/12 und als zweites
+ Argument den auszugebenden Wert. 
+ []
+
+[2] [3] (./einfuehrungArmAufgaben.aux) ) 
 Here is how much of TeX's memory you used:
- 17001 strings out of 492909
- 344214 string characters out of 6135048
- 631081 words of memory out of 5000000
- 21012 multiletter control sequences out of 15000+600000
+ 17032 strings out of 492909
+ 344513 string characters out of 6135048
+ 651081 words of memory out of 5000000
+ 21043 multiletter control sequences out of 15000+600000
  532418 words of font info for 34 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  46i,6n,70p,7141b,2208s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on einfuehrungArmAufgaben.pdf (2 pages).
+Output written on einfuehrungArmAufgaben.pdf (3 pages).
