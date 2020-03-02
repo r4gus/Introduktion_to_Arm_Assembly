@@ -80,4 +80,19 @@ Erweitern Sie Ihre Funktion, sodass diese das gleiche Verhalten aufweist.
 ### Einschränkung
 Der __write__ Syscall soll nur ein einziges mal aufgerufen werden.
 
+> TIP: Versuchen Sie den auszugebenden String auf dem Stack vorzubereiten.
 
+
+## 1.6) Hello Me
+Zum Schluss soll das Programm noch so erweitert werden, dass ein beliebiger String der Länge <= n, für eine beliebige statische Zahl n,
+eingelesen und auf der Kommandozeile wieder ausgegeben werden kann. Schreiben Sie eine Funktion __getsn__, die die Adresse eines Buffers,
+sowie dessen größe überbegeben bekommt und eine Zeile von der Standardeingabe einließt. Die Funktion stopt sobald das Ende der File erreicht ist (eof) oder n-1 Zeichen eingelesen wurden. Das '\n' Symbol soll nicht mit in den Buffer geschrieben werden. Der
+Buffer soll Null-terminiert '\0' sein. Die Funktion soll die Anzahl gelesener Bytes zurück geben.
+
+> int getsn(char* buf, int n)
+
+### Beispielausgabe
+```
+$ What is your name? >>> Bob
+Hello, Bob!
+```

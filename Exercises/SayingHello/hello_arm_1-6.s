@@ -10,6 +10,8 @@
 
 .equ EXECVE, 0xb
 
+.equ LF, 0xA
+
 
 .section .data
 hello:	.asciz "Hello, ARM!"
@@ -19,13 +21,10 @@ str:	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0
 .global _start
 
 _start:
-	ldr r0, =hello
-	bl strlen
-	mov r2, r0
-	add r2, r2, #0x1
 	ldr r0, =str
-	ldr r1, =hello
-	bl strncpy
+	mov r1, #4
+	bl getsn
+	ldr r0, =str
 	bl puts
 
 	eor r0, r0
@@ -167,6 +166,101 @@ puts:
 	.unreq saved_sp
 
 	pop {r4, r5, r6, r8, pc}
+
+
+@ int getsn(char* buf, int n)
+@
+@ Read n chars from stdin.
+@
+@ Arguments:	1. Address of buffer to write to
+@		2. Number of chars to read
+@ Returns:	Number of chars read
+.global getsn
+getsn:
+	push {r4, r5, r6, lr}
+	sub sp, sp, #0x4
+	mov r4, r0
+	mov r5, r1
+	buf .req r4
+	len .req r5
+	acc .req r6
+
+	eor acc, acc			@ acc := 0
+
+	getsn_read_loop:
+		cmp acc, len		@ if acc >= len:
+		beq getsn_read_end	@	break
+
+		mov r0, #STDIN
+		mov r1, buf
+		add r1, r1, acc
+		mov r2, len
+		sub r2, r2, acc
+		mov r7, #READ		@ read(stdin, buf+acc, len-acc)
+		svc 0
+
+		add acc, acc, r0	@ acc := acc + 'bytes read'
+		
+		@ check for '\n'
+		sub acc, acc, #0x1
+		ldrb r2, [buf, acc]
+		add acc, acc, #0x1
+		cmp r2, #LF
+		beq getsn_read_end	@ if buf[acc-1] = '\n': break
+
+		cmp r0, #0x0		@ if r0 != EOF: repeat
+		bgt getsn_read_loop	
+	getsn_read_end:
+
+	consume:
+		mov r0, #STDIN
+		mov r1, sp
+		mov r2, #0x1
+		mov r7, #READ
+		svc 0
+
+		cmp r0, #0x0
+		bgt consume
+	
+	mov r0, acc
+	sub acc, acc, #0x1
+	eor r1, r1
+	strb r1, [buf, acc]		@ buff[acc-1] = '\0'
+
+	.unreq acc
+	.unreq len
+	.unreq buf
+	add sp, sp, #0x4
+	pop {r4, r5, r6, pc}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
