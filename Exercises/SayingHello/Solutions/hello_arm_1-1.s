@@ -24,7 +24,7 @@ _start:
 	ldr r1, [pc, #0x14] 	@ r1 := &hello
 	mov r2, #len	  	@ r2 := 13
 	mov r7, #WRITE
-	svc 0		  @ write(stdout, &hello, 13)
+	svc 0		  	@ write(stdout, &hello, 13)
 	
 	eor r0, r0
 	mov r7, #EXIT
