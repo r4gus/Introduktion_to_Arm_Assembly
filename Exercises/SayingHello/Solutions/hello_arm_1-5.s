@@ -13,7 +13,9 @@
 
 .section .data
 hello:	.asciz "Hello, ARM!"
-str:	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0
+
+.section .bss
+str:	.space 0xd
 
 .section .text
 .global _start
@@ -131,9 +133,10 @@ puts:
 	len .req r5
 
 	@ allocate memory for the string
-	@sub sp, sp, len, lsl #0x2		@ sp := sp - (strlen(str)*4)
-	add len, #0x2
-	sub sp, sp, len
+	add len, #0x2				@ strlen + \n + \0
+	add r0, len, #0x3
+	bic r0, #0x3				@ keep stack 4 bytes alligned
+	sub sp, sp, r0
 	mov r6, sp
 	buf .req r6
 
@@ -141,22 +144,21 @@ puts:
 	mov r0, buf
 	mov r1, src
 	mov r2, len
-	add r2, r2, #0x1
 	bl strncpy
 
 	@ append '\n' and '\0'
-	mov r0, len
-	mov r1, #0xa
-	strb r1, [buf, r0]			@ buf[len] := '\n'
-	add r0, r0, #0x1
+	sub r0, len, #0x1
 	eor r1, r1
-	strb r1, [buf, r0]			@ buf[len+1] := '\0'
+	strb r1, [buf, r0]			@ buf[len-1] := '\0'
+	sub r0, #0x1
+	mov r1, #0xa
+	strb r1, [buf, r0]			@ buf[len-2] := '\n'
 
 	@ write to stdout
 	mov r0, #STDOUT
 	mov r1, buf
 	mov r2, len
-	add r2, r2, #0x1
+	sub r2, r2, #0x1
 	mov r7, #WRITE
 	svc 0
 	

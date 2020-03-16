@@ -13,7 +13,9 @@
 
 .section .data
 hello:	.asciz "Hello, ARM!\n"
-str:	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0
+
+.section .bss
+str:	.space 0xd 	@ str buffer to write to
 
 .section .text
 .global _start

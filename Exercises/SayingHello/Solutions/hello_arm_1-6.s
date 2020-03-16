@@ -130,9 +130,10 @@ puts:
 	len .req r5
 
 	@ allocate memory for the string
-	@sub sp, sp, len, lsl #0x2		@ sp := sp - (strlen(str)*4)
-	add len, #0x2
-	sub sp, sp, len
+	add len, #0x2				@ strlen + \n + \0
+	add r0, len, #0x3
+	bic r0, #0x3				@ keep stack 4 bytes alligned
+	sub sp, sp, r0
 	mov r6, sp
 	buf .req r6
 
@@ -140,22 +141,21 @@ puts:
 	mov r0, buf
 	mov r1, src
 	mov r2, len
-	add r2, r2, #0x1
 	bl strncpy
 
 	@ append '\n' and '\0'
-	mov r0, len
-	mov r1, #0xa
-	strb r1, [buf, r0]			@ buf[len] := '\n'
-	add r0, r0, #0x1
+	sub r0, len, #0x1
 	eor r1, r1
-	strb r1, [buf, r0]			@ buf[len+1] := '\0'
+	strb r1, [buf, r0]			@ buf[len-1] := '\0'
+	sub r0, #0x1
+	mov r1, #0xa
+	strb r1, [buf, r0]			@ buf[len-2] := '\n'
 
 	@ write to stdout
 	mov r0, #STDOUT
 	mov r1, buf
 	mov r2, len
-	add r2, r2, #0x1
+	sub r2, r2, #0x1
 	mov r7, #WRITE
 	svc 0
 	
@@ -178,7 +178,6 @@ puts:
 .global getsn
 getsn:
 	push {r4, r5, r6, lr}
-	sub sp, sp, #0x4
 	mov r4, r0
 	mov r5, r1
 	buf .req r4
@@ -208,20 +207,9 @@ getsn:
 		cmp r2, #LF
 		beq getsn_read_end	@ if buf[acc-1] = '\n': break
 
-		cmp r0, #0x0		@ if r0 != EOF: repeat
-		bgt getsn_read_loop	
+		b getsn_read_loop	
 	getsn_read_end:
 
-	consume:
-		mov r0, #STDIN
-		mov r1, sp
-		mov r2, #0x1
-		mov r7, #READ
-		svc 0
-
-		cmp r0, #0x0
-		bgt consume
-	
 	mov r0, acc
 	sub acc, acc, #0x1
 	eor r1, r1
@@ -230,7 +218,6 @@ getsn:
 	.unreq acc
 	.unreq len
 	.unreq buf
-	add sp, sp, #0x4
 	pop {r4, r5, r6, pc}
 
 
