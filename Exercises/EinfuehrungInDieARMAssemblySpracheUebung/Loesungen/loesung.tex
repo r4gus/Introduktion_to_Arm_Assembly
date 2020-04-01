@@ -323,8 +323,28 @@ cmp   offset, buffer_size   @ 1 Takt
 subge offset, buffer_size   @ 1 Takt
 \end{lstlisting}
 
+\subsubsection{c)}
+Nun soll eine einfache Funktion, in Assembler, implementiert werden. Diese soll einen Integer als Argument übergeben bekommen
+und diesen dann, ohne Beachtung des Restes, durch zwei teilen und das Ergebnis zurückgeben. Achten Sie auf eine möglichst effiziente
+Implementierung.
 
+\begin{lstlisting}
+int 
+div_two(int x)
+{
+	return x / 2;
+}
+\end{lstlisting}
 
+Rufen Sie Ihre Funktion mit unterschiedlichen Werten auf und überprüfen Sie die Ergebnisse. Sie können dafür
+die externe \texttt{info} Funktion verwenden.
+
+\textbf{Lösung:}
+\begin{lstlisting}
+div_two:
+        asr r0, #0x1
+        blx lr
+\end{lstlisting}
 
 
 
