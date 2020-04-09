@@ -258,7 +258,7 @@ bl  info     @ call info
 
 
 % ----------------------------------------------------------------------------
-\subsection{Dividieren mal anders}
+\subsection{Daten und Funktionen}
 % ----------------------------------------------------------------------------
 \subsubsection{a)}
 Auf modernen Systemen ist ein Dividierwerk standard, mit dem ein Zahl durch eine
@@ -346,15 +346,129 @@ div_two:
         blx lr
 \end{lstlisting}
 
+% ----------------------------------------------------------------------------
+\subsection{Load and Store}
+% ----------------------------------------------------------------------------
+Nun wollen wir uns explizit mit dem Speichern und Laden von Daten auseinandersetzen.
+
+\subsubsection{d)}
+Definieren Sie eine Integer-Variable mit einem beliebigen Wert in der \textbf{.data} section.
+Schreiben Sie ein kleines Programm, das diesen Wert inkrementiert. 
+
+Nutzen Sie bei bedarf die externe \textbf{info} Funktion.
+
+\textbf{Lösung:}
+\begin{lstlisting}
+.extern info
+
+.equ HEX, 0
+.equ OCT, 1
+.equ UNSIGNED, 2
+.equ SIGNED, 3
+
+.data
+@ Your initialized data
+	i:    .4byte	0xf
+
+.bss
+@ Your uninitialized data
 
 
+.text
+
+.global main
+main:
+	@ load addr of i using a literal pool
+	ldr r4, literal_pool
+	
+	@ load the value of i
+	ldr r5, [r4]
+	
+	@ increment the value of i
+	add r5, r5, #1
+
+	@ update i
+	str r5, [r4]
+
+	@ exit
+	eor r0, r0	@ r0 := 0
+	mov r7, #0x1	@ r7 := SYS_exit
+	svc 0		@ exit 0
+
+literal_pool:
+	.word i
+\end{lstlisting}
+Beachten Sie, dass Sie den Wert von i nicht direkt mittels ldr aus der .data section laden können.
+Um dieses Problem zu umgehen wurde ein sog. Literal Pool definiert. Innerhalb von diesem wurde die Adresse
+von i hinterlegt. Mittels ldr kann die Adresse von i nun in ein Register (r4) geladen werden. r4 wird
+dann genutzt um auf den eigentlichen Wert von i zuzugreifen.
+
+Alternativ kann auch die Pseudoinstruktion \textbf{ldr Rd, =i} verwendet werden. Diese legt implizit einen Literal Pool an und
+referenziert i über diesen.
+
+r4 bzw. r5 wurden nicht ohne Grund gewählt. Da zwischen den Instruktionen info() aufgerufen wird werden zwei callee save Register
+genutzt um sicher zu gehen, dass die Werte erhalten bleiben.
 
 
+\subsubsection{e)}
+Mittels der \textbf{ldm} (load multiple) Instruktion können mehrere Werte gleichzeitig geladen Werden. Die Laufzeit der Instruktion hängt
+dabei von der Anzahl der verwendeten Register ab.
+
+Definieren Sie drei beliebige Variablen in der \textbf{.data} section, summieren Sie diese auf und geben Sie das Ergebnis mittels info()
+auf der Konsole aus.
+
+\textbf{Lösung:}
+\begin{lstlisting}
+.extern info
+
+.equ HEX, 0
+.equ OCT, 1
+.equ UNSIGNED, 2
+.equ SIGNED, 3
+
+.data
+@ Your initialized data
+	array:	.word 2
+		.word 3
+		.word 5
+
+.bss
+@ Your uninitialized data
 
 
+.text
 
+.global main
+main:
+	@ load address of array
+	ldr r0, literal
+	
+	@ load all three values in a row
+	@ r1 := *(ro + 0)
+	@ r2 := *(r0 + 4)
+	@ r3 := *(r0 + 8)
+	ldmia r0, {r1, r2, r3}
 
+	@ sum up all values
+	add r1, r1, r2
+	add r1, r1, r3
+	
+	@ out
+	mov r0, #HEX
+	bl info
 
+	eor r0, r0	@ r0 := 0
+	mov r7, #0x1	@ r7 := SYS_exit
+	svc 0		@ exit 0
+
+literal:	.word array
+\end{lstlisting}
+Zu Anfang wird ein Array in der .data section definiert, das drei Wörter umfasst.
+Die Adresse des Arrays wird mittels Literal Pool geladen.
+Danach werden mittels ldmia (load multiple increase after) alle drei Werte gleichzeitig
+in die Register r1 bis r3 geladen. r0 wird dabei als Basisadresse genutzt.
+Schlussendlich werden die geladenen Werte aufsummiert und auf der Kommandozeile in 
+hexadezimal ausgegeben.
 
 
 
