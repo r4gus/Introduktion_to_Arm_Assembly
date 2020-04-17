@@ -25,6 +25,9 @@ info(const int func, const int val)
 		case SIGNED:
 			format = "val = %d\n";
 			break;
+		default:
+			format = "val = %X\n";
+			break;
 
 	}
 

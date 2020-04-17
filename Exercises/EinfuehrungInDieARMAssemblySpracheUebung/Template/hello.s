@@ -19,8 +19,20 @@
 main:
 	@ your code goes here:
 
-	mov r1, #11
-	mov r0, #HEX
+	mov r4, #100
+	mov r5, #38
+	mov r6, #0x14
+
+	add r1, r4, r5
+	mov r0, #UNSIGNED
+	bl info
+
+	sub r1, r4, r5
+	mov r0, #UNSIGNED
+	bl info
+	
+	mul r1, r5, r6
+	mov r0, #UNSIGNED
 	bl info
 
 	@ and ends here
