@@ -14,16 +14,16 @@ info(const int func, const int val)
 
 	switch(func) {
 		case HEX:
-			format = "val = 0x%X\n";
+			format = "0x%X\n";
 			break;
 		case OCT:
-			format = "val = O%o\n";
+			format = "O%o\n";
 			break;
 		case UNSIGNED:
-			format = "val = u%u\n";
+			format = "%u\n";
 			break;
 		case SIGNED:
-			format = "val = s%d\n";
+			format = "%d\n";
 			break;
 
 	}

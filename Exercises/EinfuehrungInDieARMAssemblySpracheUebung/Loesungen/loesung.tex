@@ -487,8 +487,8 @@ hexadezimal ausgegeben.
 
 \subsubsection{f)}
 Der \href{https://en.wikipedia.org/wiki/Bubble\_sort}{\textbf{Bubble Sort}} 
-Algorithmus kann zum sortieren von Listen/ Arrays (z.B. Zahlen) verwendet werden 
-und kann u.a. wie folgt implementiert werden:
+Algorithmus kann zum sortieren von Listen/ Arrays (z.B. Zahlen) verwendet 
+und u.a. wie folgt implementiert werden:
 
 \begin{lstlisting}
 bubbleSort(list):
@@ -504,11 +504,60 @@ bubbleSort(list):
 end bubbleSort
 \end{lstlisting}
 
-Die Datei \textbf{bubble.s} enthält die Definition eines Array von Zahlen.
+Die Datei \textbf{bubble.s} enthält die Definition eines Array von 4 Bit breiten Zahlen.
 Implementieren Sie eine Form des Bubble Sort Algorithmus und sortieren Sie
 das Array aufsteigend.
 
+\textbf{Lösung:}
+\begin{lstlisting}
+@ bubbleSort(array, length)
+@ r0 = array
+@ r1 = length
+.global bubbleSort
+bubbleSort:
+	push {r4, r5, lr}
+	array .req r0
+	n     .req r1
+	i     .req r2
+	lhs   .req r3
+	rhs   .req r4
+	base  .req r5
+	
+	while:
+	cmp n, #1
+	ble end_while
+	    sub n, #1
+
+	    eor i, i		@ i := 0
+	    mov base, array
+	    for:
+	    cmp i, n		@ if i > n - 1:
+	    bge end_for		@    break
+	    
+	        ldmia base, {lhs, rhs}
+		cmp lhs, rhs
+		ble skip		   @ if lhs > rhs: swap
+		    str rhs, [base]		
+		    str lhs, [base, #4]
+		skip:
+		add base, #4
+		add i, #1
+		b for
+	    end_for:
+	    b while
+	end_while:
+	
+	.unreq array
+	.unreq n
+	.unreq i
+	.unreq lhs
+	.unreq rhs
+	.unreq base
+	pop {r4, r5, pc}
+\end{lstlisting}
+
 \end{document}
+
 
 %%% Local Variables: 
 %%% TeX-PDF-mode: t

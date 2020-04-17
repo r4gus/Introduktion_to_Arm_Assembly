@@ -48,6 +48,6 @@ gcc $ofile $debugfile -o main
 
 if [ ! $? -eq 0 ]
 then
-    error "Error while during compilation."
+    error "Error during compilation."
     exit 1
 fi
