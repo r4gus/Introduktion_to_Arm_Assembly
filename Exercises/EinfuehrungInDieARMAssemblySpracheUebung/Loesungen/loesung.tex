@@ -9,6 +9,7 @@
 \usepackage{lipsum}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{hyperref}
 
 \definecolor{lstbackground}{rgb}{0.95,0.95,1}      % hellgruener Rahmen
 
@@ -79,7 +80,7 @@ POP, umull, lsl, LSL, lsr, LSR, asr, ASR, ror, ROR, rrx, RRX},
 \begin{document}
 
 \begin{center}
-  \textbf{\LARGE Name der Vorlesung} \\[1ex]%
+  \textbf{\LARGE Fortgeschrittene Themen der IT-Sicherheit} \\[1ex]%
   \textbf{\Large Aufgaben zu Einführung in die ARM Assembler Sprache}\\[2ex] %
   
 \end{center}
@@ -215,6 +216,19 @@ dann können Sie dies über die Konsole mit folgendem Befehl bewerkstelligen:
 \begin{lstlisting}
 ssh pi@192.168.62.255
 \end{lstlisting}
+
+\textbf{ACHTUNG:} Neuere Versionen von Raspbian haben \textbf{ssh standardmäßig ausgeschaltet}.
+Sie müssen dies in den Einstellungen ggf. zuerst ändern um von einem anderen Gerät per SSH auf den
+Raspberry Pi zugreifen zu können.
+
+
+\texttt{Öffnen Sie auf dem Raspberry Pi eine Konsole (strg + alt + t) und starten sie den SSH Service:}
+\begin{lstlisting}
+sudo systemctl enable ssh
+sudo systemctl start ssh
+\end{lstlisting}
+
+\href{https://www.raspberrypi.org/documentation/remote-access/ssh/}{Weitere Möglichkeiten}
 
 
 % ----------------------------------------------------------------------------
@@ -471,6 +485,28 @@ Schlussendlich werden die geladenen Werte aufsummiert und auf der Kommandozeile 
 hexadezimal ausgegeben.
 
 
+\subsubsection{f)}
+Der \href{https://en.wikipedia.org/wiki/Bubble\_sort}{\textbf{Bubble Sort}} 
+Algorithmus kann zum sortieren von Listen/ Arrays (z.B. Zahlen) verwendet werden 
+und kann u.a. wie folgt implementiert werden:
+
+\begin{lstlisting}
+bubbleSort(list):
+	n := length(list)
+	while n > 1:
+		for i := 0 to n-1 do:
+			if list[i] > list[i+1]:
+				swap(list[i], list[i+1])
+			end if
+		end for
+		n := n - 1
+	end while
+end bubbleSort
+\end{lstlisting}
+
+Die Datei \textbf{bubble.s} enthält die Definition eines Array von Zahlen.
+Implementieren Sie eine Form des Bubble Sort Algorithmus und sortieren Sie
+das Array aufsteigend.
 
 \end{document}
 
