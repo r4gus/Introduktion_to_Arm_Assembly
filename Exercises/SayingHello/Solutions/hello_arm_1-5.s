@@ -126,16 +126,16 @@ puts:
 	saved_sp .req r8
 
 	mov r4, r0
-	bl strlen
-	mov r5, r0
+	bl strlen				@ calculate string length
+	mov r5, r0				@ r5 = strlen(string)
 
 	src .req r4
 	len .req r5
 
 	@ allocate memory for the string
 	add len, #0x2				@ strlen + \n + \0
-	add r0, len, #0x3
-	bic r0, #0x3				@ keep stack 4 bytes alligned
+	add r0, len, #0x7
+	bic r0, #0x7				@ keep stack 8 bytes alligned
 	sub sp, sp, r0
 	mov r6, sp
 	buf .req r6

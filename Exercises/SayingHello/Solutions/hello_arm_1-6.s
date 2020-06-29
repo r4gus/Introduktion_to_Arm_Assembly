@@ -9,8 +9,12 @@
 .equ CLOSE, 0x6
 
 .equ EXECVE, 0xb
+.equ FCNTL, 0x37
 
 .equ LF, 0xA
+
+.equ F_SETFL, 4
+.equ O_NONBLOCK, 2048
 
 
 .section .data
@@ -22,7 +26,7 @@ str:	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0
 
 _start:
 	ldr r0, =str
-	mov r1, #4
+	mov r1, #12
 	bl getsn
 	ldr r0, =str
 	bl puts
@@ -131,8 +135,8 @@ puts:
 
 	@ allocate memory for the string
 	add len, #0x2				@ strlen + \n + \0
-	add r0, len, #0x3
-	bic r0, #0x3				@ keep stack 4 bytes alligned
+	add r0, len, #0x7
+	bic r0, #0x7				@ keep stack 8 bytes alligned
 	sub sp, sp, r0
 	mov r6, sp
 	buf .req r6
@@ -187,8 +191,8 @@ getsn:
 	eor acc, acc			@ acc := 0
 
 	getsn_read_loop:
-		cmp acc, len		@ if acc >= len:
-		beq getsn_read_end	@	break
+		cmp acc, len			@ if acc >= len:
+		beq getsn_read_empty_buffer	@	break
 
 		mov r0, #STDIN
 		mov r1, buf
@@ -208,6 +212,29 @@ getsn:
 		beq getsn_read_end	@ if buf[acc-1] = '\n': break
 
 		b getsn_read_loop	
+	
+	
+		@ read byte for byte until the buffer is empty
+		getsn_read_empty_buffer:	
+			@ set stdin nonblocking (otherwise it would wait for input until ctrl+d is pressed)
+			mov r7, #FCNTL
+			mov r0, #STDIN
+			mov r1, #F_SETFL
+			mov r2, #O_NONBLOCK
+			svc 0
+			
+			@ read char
+			sub sp, #0x1
+			mov r0, #STDIN
+			mov r1, sp
+			mov r2, #0x1
+			mov r7, #READ
+			svc 0
+			add sp, #0x1
+			cmp r0, #0x0
+			bgt getsn_read_empty_buffer
+
+	
 	getsn_read_end:
 
 	mov r0, acc
