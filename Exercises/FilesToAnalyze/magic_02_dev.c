@@ -25,6 +25,7 @@ main(int argc, char **argv)
 	count = read( STDIN, password, 31 );
 	password[count - 1] = '\0';
 
+	/* password = k1ll3r_g4m3 */
 	if( validate(password, "d*ee,kX`-f,") )
 	{
 		magic(s, strlen(s));
